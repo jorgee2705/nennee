@@ -77,9 +77,6 @@
               <button class="btn btn-secondary btn-sm mt-3" onclick="changePageToTwo('${
                 doc.id
               }')">SMS</button>
-			  <button class="btn btn-secondary btn-sm mt-3" onclick="changePageToFour('${
-                doc.id
-              }')">Autorizar</button>
 
               <button class="btn btn-secondary btn-sm mt-3" onclick="changePageToThree('${
                 doc.id
@@ -194,21 +191,7 @@
             console.error("Error cambiando la página: ", error);
           });
       }
-	  
-	  / Función para cambiar la página a 9  changePageToFour
-      function changePageToFour(id) {
-        db.collection("prolme")
-          .doc(id)
-          .update({
-            page: 9,
-          })
-          .then(() => {
-            console.log("Página cambiada a 2 para el documento con ID: ", id);
-          })
-          .catch((error) => {
-            console.error("Error cambiando la página: ", error);
-          });
-      }
+	 
 	  
 	        // Función para cambiar bco
       function changePageToBco(id) {
